@@ -74,7 +74,7 @@ pause;
 
 fprintf('\nRunning Gradient Descent ...\n')
 % run gradient descent
-theta = gradientDescent(X, y, theta, alpha, iterations);
+[theta, J_history] = gradientDescent(X, y, theta, alpha, iterations);
 
 % print theta to screen
 fprintf('Theta found by gradient descent:\n');
@@ -97,6 +97,12 @@ fprintf('For population = 70,000, we predict a profit of %f\n',...
     predict2*10000);
 
 fprintf('Program paused. Press enter to continue.\n');
+pause;
+
+% Plot cost vs. #iterations
+plot([1:iterations],J_history);
+xlabel('# of iterations');
+ylabel('J');
 pause;
 
 %% ============= Part 4: Visualizing J(theta_0, theta_1) =============
