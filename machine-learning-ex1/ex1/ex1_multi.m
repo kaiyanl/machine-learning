@@ -82,7 +82,44 @@ X = [ones(m, 1) X];
 fprintf('Running gradient descent ...\n');
 
 % Choose some alpha value
-alpha = 0.01;
+alpha = 0.3;
+num_iters = 50;
+
+% Compare the Performance with Different Learning Rate
+fprintf('Compare the performance of using different learning rates... \n');
+alpha1 = 0.01;
+alpha2 = 0.03;
+alpha3 = 0.1;
+alpha4 = 0.3;
+alpha5 = 1;
+alpha6 = 1.3;
+theta1 = zeros(3, 1);
+theta2 = zeros(3, 1);
+theta3 = zeros(3, 1);
+theta4 = zeros(3, 1);
+theta5 = zeros(3, 1);
+theta6 = zeros(3, 1);
+[theta1, J_history1] = gradientDescentMulti(X, y, theta1, alpha1, num_iters);
+[theta2, J_history2] = gradientDescentMulti(X, y, theta2, alpha2, num_iters);
+[theta3, J_history3] = gradientDescentMulti(X, y, theta3, alpha3, num_iters);
+[theta4, J_history4] = gradientDescentMulti(X, y, theta4, alpha4, num_iters);
+[theta5, J_history5] = gradientDescentMulti(X, y, theta5, alpha5, num_iters);
+[theta6, J_history6] = gradientDescentMulti(X, y, theta6, alpha6, num_iters);
+
+plot(1:50, J_history1, 'b');
+hold on;
+plot(1:50, J_history2, 'r');
+plot(1:50, J_history3, 'k');
+plot(1:50, J_history4, 'g');
+plot(1:50, J_history5, 'c');
+plot(1:50, J_history6, 'm');
+xlabel('Number of iterations');
+ylabel('Cost J');
+legend('0.01','0.03','0.1','0.3','1','1.3');
+pause;
+
+% Choose some alpha value
+alpha = 0.3;
 num_iters = 400;
 
 % Init Theta and Run Gradient Descent 
@@ -96,15 +133,21 @@ xlabel('Number of iterations');
 ylabel('Cost J');
 
 % Display gradient descent's result
+fprintf('Choose alpha = 0.3 \n');
 fprintf('Theta computed from gradient descent: \n');
 fprintf(' %f \n', theta);
 fprintf('\n');
+
+pause;
 
 % Estimate the price of a 1650 sq-ft, 3 br house
 % ====================== YOUR CODE HERE ======================
 % Recall that the first column of X is all-ones. Thus, it does
 % not need to be normalized.
-price = 0; % You should change this
+X1 = [1650, 3];
+X1 = (X1-mu)./sigma;
+X1 = [1 X1];
+price = X1*theta; % You should change this
 
 
 % ============================================================
@@ -149,7 +192,7 @@ fprintf('\n');
 
 % Estimate the price of a 1650 sq-ft, 3 br house
 % ====================== YOUR CODE HERE ======================
-price = 0; % You should change this
+price = [1, 1650, 3] * theta; % You should change this
 
 
 % ============================================================
