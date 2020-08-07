@@ -78,8 +78,8 @@ col = 1:m;
 y = zeros(size(h)); % 10x5000
 index = sub2ind(size(y),row,col);
 y(index) = 1;
-J = 1/m * sum( sum( -y.*log(h)-(1-y).*log(1-h) ) ) \
-  + lambda/(2*m) \
+J = 1/m * sum( sum( -y.*log(h)-(1-y).*log(1-h) ) ) ...
+  + lambda/(2*m) ...
   *( sum(sum(Theta1(:,2:end).^2)) + sum(sum(Theta2(:,2:end).^2)) );
   
 % -------------------------------------------------------------
