@@ -62,24 +62,26 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+% X - 5000x400
+% Y - 5000x1
+% Theta1 - 25x401
+% Theta2 - 10x26
+a1 = [ones(m,1) X]; % 5000x401
+z2 = Theta1*a1'; % 25x5000 
+a2 = sigmoid(z2); % 25x5000
+a2 = [ones(1,size(a2,2)); a2]; % 26x5000
+z3 = Theta2*a2; % 10x5000
+a3 = sigmoid(z3); % 10x5000
+h = a3; % 10x5000
+row = y';
+col = 1:m;
+y = zeros(size(h)); % 10x5000
+index = sub2ind(size(y),row,col);
+y(index) = 1;
+J = 1/m * sum( sum( -y.*log(h)-(1-y).*log(1-h) ) ) \
+  + lambda/(2*m) \
+  *( sum(sum(Theta1(:,2:end).^2)) + sum(sum(Theta2(:,2:end).^2)) );
+  
 % -------------------------------------------------------------
 
 % =========================================================================
