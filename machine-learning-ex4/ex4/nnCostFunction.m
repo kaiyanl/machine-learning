@@ -66,8 +66,8 @@ Theta2_grad = zeros(size(Theta2));
 % Y - 5000x1
 % Theta1 - 25x401
 % Theta2 - 10x26
-a1 = [ones(m,1) X]; % 5000x401
-z2 = Theta1*a1'; % 25x5000 
+a1 = [ones(m,1) X]'; % 401x5000
+z2 = Theta1*a1; % 25x5000 
 a2 = sigmoid(z2); % 25x5000
 a2 = [ones(1,size(a2,2)); a2]; % 26x5000
 z3 = Theta2*a2; % 10x5000
@@ -81,7 +81,21 @@ y(index) = 1;
 J = 1/m * sum( sum( -y.*log(h)-(1-y).*log(1-h) ) ) ...
   + lambda/(2*m) ...
   *( sum(sum(Theta1(:,2:end).^2)) + sum(sum(Theta2(:,2:end).^2)) );
-  
+
+d3 = a3-y; % 10x5000
+d2 = Theta2'*d3.*(a2.*(1-a2)); % 26x5000
+d2 = d2(2:end,:); % 25x5000 - remove d20
+
+delta2 = zeros(size(Theta2)); % 10x26
+delta2 = d3*a2'; % 10x26
+Theta2_grad = 1/m*delta2; % 10x26
+Theta2_grad(:,2:end) += lambda/m*Theta2(:,2:end); % regularization
+
+delta1 = zeros(size(Theta1)); % 25x401
+delta1 = d2*a1'; % 25x401
+Theta1_grad = 1/m*delta1; % 25x401
+Theta1_grad(:,2:end) += lambda/m*Theta1(:,2:end); % regularization
+
 % -------------------------------------------------------------
 
 % =========================================================================
